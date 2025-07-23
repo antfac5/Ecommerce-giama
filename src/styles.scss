@@ -1,0 +1,11 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Angular Material Theme - Azure Blue */
+@import '@angular/material/prebuilt-themes/azure-blue.css';
+
+/* Personalizzazioni per e-commerce */
+:root {
+  --primary-color: #1976d2;    /* Blu del tema */
+  --accent-color: #ffeb3b;     /* Giallo del tuo logo */
+  --warn-color: #f44336;       /* Rosso per errori */
+}
