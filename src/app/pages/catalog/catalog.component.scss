@@ -1,0 +1,19 @@
+.img {
+    display: block;
+    margin: 30px auto 0 auto;
+    width: 100px;
+    height: auto;
+}
+
+.product-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.product-card {
+    width: 350px;
+    height: 350px;
+    margin: 20px;
+}

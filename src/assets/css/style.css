@@ -907,11 +907,12 @@ textarea.input {
 }
 
 .product .product-body {
-  position: relative;
-  padding: 15px;
-  background-color: #FFF;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 20px;
   text-align: center;
-  z-index: 20;
 }
 
 .product .product-body .product-category {

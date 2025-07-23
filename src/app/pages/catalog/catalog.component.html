@@ -1,1 +1,12 @@
-<p>catalog works!</p>
+<div class="product-container">
+    <div class="row" *ngFor="let product of products">
+        <div class="product product-card">
+            <img [src]="product.image" class="img" alt="{{ product.title }}"/>
+            <div class="product-body">
+                <p class="product-category">{{ product.category }}</p>
+                <h3 class="product-name">{{ product.title }}</h3>
+                <p class="product-price">{{ product.price | currency:'EUR':'symbol':'1.2-2' }}</p>
+            </div>
+        </div>
+    </div>
+</div>
