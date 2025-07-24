@@ -1,0 +1,33 @@
+<div *ngIf="product$ | async as product">
+  <div class="product-details">
+    <div class="product-wrapper">
+      <img [src]="product.image" alt="{{ product.title }}" class="img"/>
+
+      <div class="product-info">
+        <p class="product-category">{{ product.category }}</p>
+        <h2 class="product-name">{{ product.title }}</h2>
+        <p>{{ product.description }}</p>
+        <p class="product-price">Price: {{ product.price | currency }}</p>
+
+        <div class="cart-controls">
+          <div class="quantity-selector">
+            <label for="quantity">Quantity:</label>
+            <input 
+                #quantityInput
+                id="quantity"
+                type="number"
+                min="1"
+                [defaultValue]="1"/>
+          </div>
+          <button 
+            type="button" 
+            class="btn btn-sm btn-outline-primary add-to-cart-btn"
+            id="add-to-cart-button"
+            (click)="addToCart(product, +quantityInput.value)">
+            🛒 Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

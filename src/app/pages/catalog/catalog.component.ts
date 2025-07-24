@@ -5,6 +5,7 @@ import { NgFor, NgIf, CurrencyPipe } from '@angular/common';
 import { Subject } from 'rxjs';
 import { takeUntil, catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-catalog',
@@ -21,7 +22,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
   
   private destroy$ = new Subject<void>();
 
-  constructor(private productFactoryService: ProductFactoryService) {}
+  constructor(private productFactoryService: ProductFactoryService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadProducts();
@@ -54,7 +55,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
   }
 
   getProductDetails(product: Product): void {
-    console.log('Dettagli del prodotto:', product);
+    this.router.navigate(['/product', product.id]);
   }
 
   // Metodi per demo e testing
