@@ -77,43 +77,4 @@ export class CatalogComponent implements OnInit, OnDestroy {
     this.currentServiceType = 'real';
     this.loadProducts();
   }
-
-  /**
-   * Testa le funzionalità avanzate del mock service
-   */
-  testAdvancedFeatures(): void {
-    const advancedService = this.productFactoryService.getAdvancedMockService();
-    
-    // Test ricerca avanzata
-    advancedService.searchProducts({
-      category: 'Electronics',
-      minPrice: 200,
-      maxPrice: 1000,
-      sortBy: 'price',
-      sortOrder: 'asc'
-    }).subscribe(results => {
-      console.log('🔍 Risultati ricerca avanzata:', results);
-    });
-
-    // Test paginazione
-    advancedService.getProductsPaginated(1, 3).subscribe(result => {
-      console.log('📄 Prodotti paginati:', result);
-    });
-
-    // Test categorie
-    advancedService.getCategories().subscribe(categories => {
-      console.log('📂 Categorie disponibili:', categories);
-    });
-  }
-
-  /**
-   * Testa entrambi i servizi per confronto
-   */
-  compareBothServices(): void {
-    this.productFactoryService.testBothServices().subscribe(result => {
-      console.log('🔄 Confronto servizi:');
-      console.log('Mock products:', result.mockProducts.length);
-      console.log('Real products:', result.realProducts.length);
-    });
-  }
 }

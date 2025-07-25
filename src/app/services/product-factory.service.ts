@@ -22,13 +22,7 @@ export class ProductFactoryService implements IBasicProductService {
   private advancedMockService = inject(ProductAdvancedMockService);
 
   constructor() {
-    // Configura il mock service in base alle impostazioni
-    const config = this.configService.getConfig();
-    this.advancedMockService.configureMock({
-      networkDelay: config.mockDelay,
-      simulateErrors: config.simulateErrors,
-      enableLogging: config.enableLogging
-    });
+    // Il mock service è già configurato con i valori di default
   }
 
   /**
@@ -63,27 +57,7 @@ export class ProductFactoryService implements IBasicProductService {
     return this.getActiveService().getProductById(id);
   }
 
-  getProductsByCategory(category: string): Observable<Product[]> {
-    return this.getActiveService().getProductsByCategory(category);
-  }
-
-  searchProducts(searchTerm: string): Observable<Product[]> {
-    return this.getActiveService().searchProducts(searchTerm);
-  }
-
-  addProduct(product: Product): Observable<Product> {
-    return this.getActiveService().addProduct(product);
-  }
-
-  updateProduct(id: number, product: Product): Observable<Product | null> {
-    return this.getActiveService().updateProduct(id, product);
-  }
-
-  deleteProduct(id: number): Observable<boolean> {
-    return this.getActiveService().deleteProduct(id);
-  }
-
-  // Metodi aggiuntivi specifici per funzionalità avanzate
+  // Metodi aggiuntivi specifici per funzionalità di configurazione
 
   /**
    * Ottiene il servizio mock avanzato (sempre mock, utile per demo)
@@ -111,44 +85,5 @@ export class ProductFactoryService implements IBasicProductService {
    */
   getCurrentServiceType(): 'mock' | 'real' {
     return this.configService.shouldUseMockServices() ? 'mock' : 'real';
-  }
-
-  /**
-   * Metodo di utilità per testare entrambi i servizi
-   */
-  testBothServices(): Observable<{
-    mockProducts: Product[];
-    realProducts: Product[];
-  }> {
-    return new Observable(observer => {
-      const results: any = {};
-      
-      this.mockService.getProducts().subscribe({
-        next: (mockProducts) => {
-          results.mockProducts = mockProducts;
-          if (results.realProducts) {
-            observer.next(results);
-            observer.complete();
-          }
-        },
-        error: (error) => observer.error(error)
-      });
-
-      this.realService.getProducts().subscribe({
-        next: (realProducts) => {
-          results.realProducts = realProducts;
-          if (results.mockProducts) {
-            observer.next(results);
-            observer.complete();
-          }
-        },
-        error: (error) => {
-          // Se il servizio reale fallisce, restituisci solo i mock
-          results.realProducts = [];
-          observer.next(results);
-          observer.complete();
-        }
-      });
-    });
   }
 }
