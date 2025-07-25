@@ -48,6 +48,46 @@ Table OF Contents
 ------------------------------------*/
 
 /*=========================================================
+	STICKY FOOTER LAYOUT
+===========================================================*/
+
+/* Assicura che html e body occupino tutta l'altezza della viewport */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Container principale per il layout sticky footer */
+.page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Il contenuto principale deve crescere per spingere il footer in basso */
+.main-content {
+  flex: 1;
+}
+
+/* Il footer rimane sempre in fondo */
+#footer {
+  flex-shrink: 0;
+  margin-top: auto;
+}
+
+/* Aggiunta di padding al main-content per evitare che il contenuto tocchi i bordi */
+.main-content {
+  padding-bottom: 20px;
+}
+
+/* Assicura che il container Bootstrap non interferisca con il layout */
+.page-wrapper .container, 
+.page-wrapper .container-fluid {
+  height: auto;
+}
+
+/*=========================================================
 	01 -> GENERAL
 ===========================================================*/
 
@@ -141,6 +181,7 @@ textarea.input {
 
 .input-number input[type="number"] {
   -moz-appearance: textfield;
+  appearance: textfield;
   height: 40px;
   width: 100%;
   border: 1px solid #E4E7ED;
@@ -2172,6 +2213,11 @@ textarea.input {
     margin-top: 30px;
     margin-bottom: 30px;
   }
+  
+  /* Sticky footer responsive adjustments */
+  .main-content {
+    padding-bottom: 15px;
+  }
 }
 
 @media only screen and (max-width: 767px) {
@@ -2181,6 +2227,11 @@ textarea.input {
   }
   .section-tab-nav li {
     margin-top: 10px;
+  }
+  
+  /* Sticky footer per tablet */
+  .main-content {
+    padding-bottom: 10px;
   }
 }
 
@@ -2195,5 +2246,14 @@ textarea.input {
   .store-pagination {
     float: none;
     margin-top: 10px;
+  }
+  
+  /* Sticky footer per mobile */
+  .page-wrapper {
+    min-height: 100vh;
+  }
+  
+  .main-content {
+    padding-bottom: 5px;
   }
 }
