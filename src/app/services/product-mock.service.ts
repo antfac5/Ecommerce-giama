@@ -49,4 +49,9 @@ export class ProductMockService implements IBasicProductService {
     const product = this.mockProducts.find(p => p.id === id.toString());
     return of(product).pipe(delay(300));
   }
+
+  getProductsByCategory(category: string): Observable<Product[]> {
+    const filteredProducts = this.mockProducts.filter(p => p.category === category);
+    return of(filteredProducts).pipe(delay(500));
+  }
 }

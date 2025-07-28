@@ -7,6 +7,7 @@ import { Product } from '../model/Product';
 export interface IBasicProductService {
   getProducts(): Observable<Product[]>;
   getProductById(id: string): Observable<Product | undefined>;
+  getProductsByCategory(category: string): Observable<Product[]>;
 }
 
 /**
