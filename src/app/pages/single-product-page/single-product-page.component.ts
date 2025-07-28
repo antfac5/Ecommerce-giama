@@ -34,4 +34,9 @@ export class SingleProductPageComponent {
     console.log(`Aggiunto al carrello: ${product.title} con id ${product.id} in quantità ${qty}`);
   }
 
+  orderNow(): void {
+    // TODO: Implement order now functionality
+    console.log('Not implemented: Order Now functionality');
+  }
+
 }

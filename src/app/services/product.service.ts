@@ -42,7 +42,7 @@ export class ProductService implements IBasicProductService {
     let params = new HttpParams()
       .set('page', 0)
       .set('pageSize', 10);
-    return this.http.get<PagedResponse<any>>(`${this.apiUrl}/${category}`, { params }).pipe(
+    return this.http.get<PagedResponse<any>>(`${this.apiUrl}/category/${category}`, { params }).pipe(
       map(response => {
         return response.entities.map(
           p => ProductMapper.fromApiResponse(p)
