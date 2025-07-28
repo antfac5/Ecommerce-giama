@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import { Product } from '../model/Product';
 import { ProductService } from './product.service';
 import { ProductMockService } from './product-mock.service';
-import { ProductAdvancedMockService } from './product-advanced-mock.service';
 import { AppConfigService } from './app-config.service';
 import { IBasicProductService } from './product-service.interface';
 
@@ -19,8 +18,6 @@ export class ProductFactoryService implements IBasicProductService {
   private configService = inject(AppConfigService);
   private realService = inject(ProductService);
   private mockService = inject(ProductMockService);
-  private advancedMockService = inject(ProductAdvancedMockService);
-
   constructor() {
     // Il mock service è già configurato con i valori di default
   }
@@ -58,13 +55,6 @@ export class ProductFactoryService implements IBasicProductService {
   }
 
   // Metodi aggiuntivi specifici per funzionalità di configurazione
-
-  /**
-   * Ottiene il servizio mock avanzato (sempre mock, utile per demo)
-   */
-  getAdvancedMockService(): ProductAdvancedMockService {
-    return this.advancedMockService;
-  }
 
   /**
    * Forza l'uso del servizio mock per test

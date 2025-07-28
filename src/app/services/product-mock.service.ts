@@ -1,25 +1,37 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, delay } from 'rxjs';
-import { Product } from '../model/Product';
+import { Product, ProductMapper } from '../model';
+import { EXAMPLE_API_RESPONSE } from '../model/examples';
+import { IBasicProductService } from './product-service.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductMockService {
+export class ProductMockService implements IBasicProductService {
 
-  // Dati mock statici
-  private mockProducts: Product[] = [
-    new Product('1', 'iPhone 15 Pro', 'Smartphone di ultima generazione con fotocamera avanzata', 10, 'DISPONIBILE', 699.99, 'Electronics', 'assets/img/product01.png'),
-    new Product('2', 'MacBook Pro M3', 'Laptop professionale per sviluppatori', 8, 'DISPONIBILE', 1299.99, 'Electronics', 'assets/img/product02.png'),
-    new Product('3', 'Nike Air Max', 'Sneakers sportive comode e trendy', 25, 'DISPONIBILE', 149.99, 'Fashion', 'assets/img/product03.png'),
-    new Product('4', 'Sony WH-1000XM5', 'Cuffie wireless con cancellazione del rumore', 15, 'DISPONIBILE', 299.99, 'Electronics', 'assets/img/product04.png'),
-    new Product('5', 'Apple Watch Series 9', 'Orologio smartwatch con GPS integrato', 12, 'DISPONIBILE', 399.99, 'Electronics', 'assets/img/product05.png'),
-    new Product('6', 'North Face Jacket', 'Giacca invernale impermeabile', 20, 'DISPONIBILE', 199.99, 'Fashion', 'assets/img/product06.png'),
-    new Product('7', 'iPad Pro 12.9', 'Tablet per creativi e professionisti', 8, 'DISPONIBILE', 599.99, 'Electronics', 'assets/img/product07.png'),
-    new Product('8', 'Travel Backpack Pro', 'Zaino da viaggio resistente e capiente', 30, 'DISPONIBILE', 89.99, 'Travel', 'assets/img/product08.png')
-  ];
+  // Dati mock dal file examples.ts
+  private mockProducts: Product[] = [];
 
-  constructor() { }
+  constructor() { 
+    // Carica i dati dall'esempio API e convertili in Product[]
+    this.loadMockDataFromExample();
+  }
+
+  private loadMockDataFromExample(): void {
+    // Converte la risposta API dell'esempio in modelli tipizzati
+    const pagedResponse = ProductMapper.fromApiPagedResponse(EXAMPLE_API_RESPONSE);
+    this.mockProducts = pagedResponse.entities;
+    
+    // Aggiungi alcuni prodotti extra per avere più varietà nei mock
+    this.mockProducts.push(
+      new Product('2', 'TypeScript Handbook', 'Guida completa a TypeScript', 15, 'DISPONIBILE', 45.99, 'Libri', 'assets/img/product01.png'),
+      new Product('3', 'Angular Pro Guide', 'Manuale avanzato di Angular', 12, 'DISPONIBILE', 65.00, 'Libri', 'assets/img/product02.png'),
+      new Product('4', 'React Cookbook', 'Ricette pratiche per React', 8, 'DISPONIBILE', 55.50, 'Libri', 'assets/img/product03.png'),
+      new Product('5', 'Vue.js Essentials', 'Fondamenti di Vue.js', 20, 'DISPONIBILE', 40.00, 'Libri', 'assets/img/product04.png')
+    );
+    
+    console.log('📚 ProductMockService: Caricati', this.mockProducts.length, 'prodotti dai dati di esempio');
+  }
 
   /**
    * Restituisce tutti i prodotti con un delay simulato

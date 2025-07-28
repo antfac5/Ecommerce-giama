@@ -25,7 +25,7 @@ export const EXAMPLE_API_RESPONSE: ApiPagedResponse = {
             "status": "DISPONIBILE",
             "unitPrice": 50.00,
             "category": "Libri",
-            "imageUrl": "https://example.com/java-book.jpg"
+            "imageUrl": "assets/img/product05.png"
         }
     ],
     "pageMetaData": {
