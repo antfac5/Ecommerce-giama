@@ -50,7 +50,7 @@ export class ProductFactoryService implements IBasicProductService {
     return this.getActiveService().getProducts();
   }
 
-  getProductById(id: number): Observable<Product | undefined> {
+  getProductById(id: string): Observable<Product | undefined> {
     return this.getActiveService().getProductById(id);
   }
 

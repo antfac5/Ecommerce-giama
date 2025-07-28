@@ -7,7 +7,7 @@
         <p class="product-category">{{ product.category }}</p>
         <h2 class="product-name">{{ product.title }}</h2>
         <p>{{ product.description }}</p>
-        <p class="product-price">Price: {{ product.price | currency }}</p>
+        <p class="product-price">{{ product.price | currency }}</p>
 
         <div class="cart-controls">
           <div class="quantity-selector">
@@ -17,6 +17,7 @@
                 id="quantity"
                 type="number"
                 min="1"
+                [max]="product.quantity"
                 [defaultValue]="1"/>
           </div>
           <button 

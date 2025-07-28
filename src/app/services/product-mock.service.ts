@@ -45,7 +45,7 @@ export class ProductMockService implements IBasicProductService {
   /**
    * Restituisce un singolo prodotto per ID
    */
-  getProductById(id: number): Observable<Product | undefined> {
+  getProductById(id: string): Observable<Product | undefined> {
     const product = this.mockProducts.find(p => p.id === id.toString());
     return of(product).pipe(delay(300));
   }

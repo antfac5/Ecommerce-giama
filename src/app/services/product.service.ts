@@ -15,7 +15,10 @@ export class ProductService implements IBasicProductService {
   constructor(private http: HttpClient) {}
 
   getProducts(): Observable<Product[]> {
-    return this.http.get<PagedResponse<any>>(this.apiUrl).pipe(
+    let params = new HttpParams()
+      .set('page', 0)
+      .set('pageSize', 10);
+    return this.http.get<PagedResponse<any>>(this.apiUrl, { params }).pipe(
       map(response => {
         return response.entities.map(
           p => ProductMapper.fromApiResponse(p)
@@ -24,19 +27,27 @@ export class ProductService implements IBasicProductService {
     );
   }
 
+  getProductById(id: string): Observable<Product | undefined> {
+    return this.http.get<Product>(`${this.apiUrl}/${id}`).pipe(
+      map(product => {
+        if (product) {
+          return ProductMapper.fromApiResponse(product);
+        }
+        return undefined;
+      })
+    );
+  }
 
-  getProductById(id: number): Observable<Product | undefined> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`).pipe(
-      map(p => p ? new Product(
-        p.id.toString(),
-        p.title,
-        p.description,
-        1, // quantità di default
-        'DISPONIBILE', // status di default
-        p.price,
-        p.category,
-        p.image
-      ) : undefined)
+  getProductsByCategory(category: string): Observable<Product[]> {
+    let params = new HttpParams()
+      .set('page', 0)
+      .set('pageSize', 10);
+    return this.http.get<PagedResponse<any>>(`${this.apiUrl}/${category}`, { params }).pipe(
+      map(response => {
+        return response.entities.map(
+          p => ProductMapper.fromApiResponse(p)
+        );
+      })
     );
   }
 }

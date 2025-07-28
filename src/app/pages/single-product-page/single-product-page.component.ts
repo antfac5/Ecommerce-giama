@@ -15,7 +15,7 @@ import { ActivatedRoute } from '@angular/router';
 export class SingleProductPageComponent {
 
   product$: Observable<Product | undefined> | undefined;
-  productId: number | undefined;
+  productId: string | undefined;
 
   constructor(
     private productFactoryService: ProductFactoryService,
@@ -24,8 +24,10 @@ export class SingleProductPageComponent {
   }
 
   loadProduct(): void {
-    this.productId = Number(this.route.snapshot.paramMap.get('id'));
-    this.product$ = this.productFactoryService.getProductById(this.productId);
+    this.productId = this.route.snapshot.paramMap.get('id') || undefined;
+    if (this.productId) {
+      this.product$ = this.productFactoryService.getProductById(this.productId);
+    }
   }
 
   addToCart(product: Product, qty: number): void {
