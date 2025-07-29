@@ -54,4 +54,13 @@ export class ProductMockService implements IBasicProductService {
     const filteredProducts = this.mockProducts.filter(p => p.category === category);
     return of(filteredProducts).pipe(delay(500));
   }
+
+  searchProducts(searchTerm: string): Observable<Product[]> {
+    const searchTermLower = searchTerm.toLowerCase();
+    const filteredProducts = this.mockProducts.filter(p => 
+      p.name.toLowerCase().includes(searchTermLower) || 
+      p.description.toLowerCase().includes(searchTermLower)
+    );
+    return of(filteredProducts).pipe(delay(500));
+  }
 }

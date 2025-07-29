@@ -7,6 +7,7 @@ import { takeUntil, catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { CategorySelectorComponent } from '../../components/category-selector/category-selector.component';
+import { SearchService, SearchEvent } from '../../services/search.service';
 
 @Component({
   selector: 'app-catalog',
@@ -21,14 +22,24 @@ export class CatalogComponent implements OnInit, OnDestroy {
   error: string | null = null;
   currentServiceType: 'mock' | 'real' = 'mock';
   category: string = '';
+  currentSearchTerm: string = '';
+  isSearchMode: boolean = false;
   
   private destroy$ = new Subject<void>();
 
-  constructor(private productFactoryService: ProductFactoryService, private router: Router) {}
+  constructor(
+    private productFactoryService: ProductFactoryService,
+    private router: Router,
+    private searchService: SearchService) {}
 
   ngOnInit(): void {
     this.loadProducts();
     this.currentServiceType = this.productFactoryService.getCurrentServiceType();
+    this.searchService.searchEvent$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe((event: SearchEvent) => {
+      this.handleSearchEvent(event);
+    });
   }
 
   ngOnDestroy(): void {
@@ -71,6 +82,45 @@ export class CatalogComponent implements OnInit, OnDestroy {
         console.error('Errore caricamento prodotti per categoria:', error);
       }
       );
+  }
+
+      /**
+   * ✅ Gestisce eventi di ricerca
+   */
+  private handleSearchEvent(searchEvent: SearchEvent): void {
+    this.currentSearchTerm = searchEvent.searchTerm;
+    
+    if (searchEvent.searchTerm.trim()) {
+      this.isSearchMode = true;
+      this.searchProducts(searchEvent.searchTerm);
+    } else {
+      this.isSearchMode = false;
+    }
+  }
+
+    /**
+   * ✅ Ricerca prodotti
+   */
+  private searchProducts(searchTerm: string): void {
+    this.loading = true;
+    this.error = null;
+    
+    console.log(`🔍 Ricerca nel catalogo: "${searchTerm}"`);
+
+    this.productFactoryService.searchProducts(searchTerm)
+      .pipe(
+        takeUntil(this.destroy$),
+        catchError(error => {
+          this.error = `Errore nella ricerca "${searchTerm}": ${error.message}`;
+          console.error('Errore ricerca:', error);
+          return of([]);
+        }),
+        finalize(() => this.loading = false)
+      )
+      .subscribe(products => {
+        this.products = products;
+        console.log(`✅ Trovati ${products.length} prodotti per "${searchTerm}"`);
+      });
   }
 
   // Metodi per demo e testing

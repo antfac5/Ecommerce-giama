@@ -1,0 +1,20 @@
+<form (ngSubmit)="onSearch()">
+    <input class="input" 
+           placeholder="Cerca prodotti per pesca..." 
+           type="text"
+           [(ngModel)]="searchTerm"
+           (input)="onSearchInput()"
+           name="searchTerm"
+           (keyup.enter)="onSearch()"
+           [disabled]="isSearching">    
+    <!-- Bottone Search -->
+    <button class="search-btn" 
+            type="submit"
+            [disabled]="isSearching">
+        <i class="fa" 
+           [class.fa-search]="!isSearching"
+           [class.fa-spinner]="isSearching"
+           [class.fa-spin]="isSearching"></i>
+        <span>{{ isSearching ? ' Ricerca...' : ' Cerca' }}</span>
+    </button>
+</form>

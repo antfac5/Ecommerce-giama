@@ -58,6 +58,10 @@ export class ProductFactoryService implements IBasicProductService {
     return this.getActiveService().getProductsByCategory(category);
   }
 
+  searchProducts(searchTerm: string): Observable<Product[]> {
+    return this.getActiveService().searchProducts(searchTerm);
+  }
+
   // Metodi aggiuntivi specifici per funzionalità di configurazione
 
   /**

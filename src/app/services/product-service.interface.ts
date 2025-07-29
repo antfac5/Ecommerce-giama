@@ -8,6 +8,7 @@ export interface IBasicProductService {
   getProducts(): Observable<Product[]>;
   getProductById(id: string): Observable<Product | undefined>;
   getProductsByCategory(category: string): Observable<Product[]>;
+  searchProducts(searchTerm: string): Observable<Product[]>;
 }
 
 /**

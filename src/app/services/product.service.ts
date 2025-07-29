@@ -50,4 +50,22 @@ export class ProductService implements IBasicProductService {
       })
     );
   }
+
+  searchProducts(searchTerm: string): Observable<Product[]> {
+    let params = new HttpParams()
+      .set('page', 0)
+      .set('pageSize', 10)
+      .set('search', searchTerm.trim());
+
+    console.log(`🔍 Ricerca API: "${searchTerm}"`);
+    
+    return this.http.get<PagedResponse<any>>(this.apiUrl, { params }).pipe(
+      map(response => {
+        console.log(`✅ Trovati ${response.entities.length} prodotti per "${searchTerm}"`);
+        return response.entities.map(
+          p => ProductMapper.fromApiResponse(p)
+        );
+      })
+    );
+  }
 }
