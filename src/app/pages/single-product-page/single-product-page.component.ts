@@ -31,6 +31,7 @@ export class SingleProductPageComponent {
   }
 
   addToCart(product: Product, qty: number): void {
+    // TODO: Implement add to cart functionality
     console.log(`Aggiunto al carrello: ${product.title} con id ${product.id} in quantità ${qty}`);
   }
 

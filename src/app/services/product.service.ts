@@ -59,7 +59,7 @@ export class ProductService implements IBasicProductService {
 
     console.log(`🔍 Ricerca API: "${searchTerm}"`);
     
-    return this.http.get<PagedResponse<any>>(this.apiUrl, { params }).pipe(
+    return this.http.get<PagedResponse<any>>(`${this.apiUrl}/search`, { params }).pipe(
       map(response => {
         console.log(`✅ Trovati ${response.entities.length} prodotti per "${searchTerm}"`);
         return response.entities.map(
